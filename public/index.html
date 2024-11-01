@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=480" />
+    <title>title</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="shortcut icon" href="favicon.ico" type="" />
+    <meta name="description" content="description" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Зробити замовлення</h1>
+      <form id="telegramForm">
+        <label for="name"></label>
+        <input
+          type="text"
+          id="name"
+          placeholder="Введіть ваше ім'я"
+          name="name"
+          required
+        />
+
+        <label for="phone"></label>
+        <input
+          type="tel"
+          id="phone"
+          placeholder="Введіть ваш телефон"
+          name="phone"
+          required
+        />
+
+        <label for="message"></label>
+        <textarea
+          id="message"
+          placeholder="Залишіть коментар"
+          name="message"
+          required
+        ></textarea>
+
+        <button type="submit">Замовити</button>
+      </form>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
