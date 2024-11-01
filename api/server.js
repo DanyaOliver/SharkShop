@@ -1,44 +1,35 @@
-import express from "express";
 import fetch from "node-fetch";
-import bodyParser from "body-parser";
 import dotenv from "dotenv";
 
 dotenv.config();
 
-const app = express();
-const PORT = 3000;
+export default async function handler(req, res) {
+  if (req.method === "POST") {
+    const { name, phone, message } = req.body;
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+    const telegramMessage = `Новая заявка с сайта:\n\nИмя: ${name}\nТелефон: ${phone}\nСообщение: ${message}`;
 
-app.use(express.static("public"));
+    const botToken = process.env.TELEGRAM_BOT_TOKEN;
+    const chatId = process.env.TELEGRAM_CHAT_ID;
 
-app.post("/sendToTelegram", (req, res) => {
-  const { name, phone, message } = req.body;
+    const url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(
+      telegramMessage
+    )}`;
 
-  const telegramMessage = `Новая заявка с сайта:\n\nИмя: ${name}\nТелефон: ${phone}\nСообщение: ${message}`;
-
-  const botToken = process.env.TELEGRAM_BOT_TOKEN;
-  const chatId = process.env.TELEGRAM_CHAT_ID;
-
-  const url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(
-    telegramMessage
-  )}`;
-
-  fetch(url)
-    .then((response) => {
+    try {
+      const response = await fetch(url);
       if (response.ok) {
-        res.send("Сообщение отправлено!");
+        return res.status(200).json({ message: "Сообщение отправлено!" });
       } else {
-        res.status(500).send("Ошибка при отправке сообщения.");
+        return res
+          .status(500)
+          .json({ error: "Ошибка при отправке сообщения." });
       }
-    })
-    .catch((error) => {
+    } catch (error) {
       console.error("Ошибка:", error);
-      res.status(500).send("Ошибка при отправке сообщения.");
-    });
-});
-
-app.listen(PORT, () => {
-  console.log(`Сервер запущен на http://localhost:${PORT}`);
-});
+      return res.status(500).json({ error: "Ошибка при отправке сообщения." });
+    }
+  } else {
+    return res.status(405).json({ error: "Метод не поддерживается." });
+  }
+}
