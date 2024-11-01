@@ -80,15 +80,15 @@ button:active {
   border-radius: 5px;
   font-size: 16px;
   opacity: 0.9;
-  z-index: 1000; /* Поверх всех элементов */
+  z-index: 1000;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   transition: opacity 0.3s ease;
 }
 
 .notification.success {
-  background-color: #4caf50; /* Зеленый цвет для успешной отправки */
+  background-color: #4caf50;
 }
 
 .notification.error {
-  background-color: #f44336; /* Красный цвет для ошибки */
+  background-color: #f44336;
 }

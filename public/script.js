@@ -43,5 +43,5 @@ function showNotification(message, type) {
 
   setTimeout(() => {
     notification.remove();
-  }, 3000); // Уведомление исчезает через 3 секунды
+  }, 3000);
 }
